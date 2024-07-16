@@ -1,0 +1,493 @@
+<!DOCTYPE html>
+<html lang="UTF-8">
+
+<head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Honi的文件仓库</title>
+    <link rel="shortcut icon" href="img/tou.png">
+    <!-- Font Awesome Icons -->
+    <link
+    rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.2.0/css/all.min.css"
+    />
+    <!-- Google Fonts  -->
+    <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500&display=swap"
+    rel="stylesheet"
+    />
+    <!-- 引入jquery -->
+    <script src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <style>
+        * {
+            box-sizing: border-box;
+            font-family: "Poppins", sans-serif;
+            padding: 0;
+            margin: 0;
+        }
+
+        body {
+          height: 100vh;  
+          background-image: linear-gradient(to bottom, rgb(86, 71, 117), #000, #000);
+          background-repeat:no-repeat;
+          background-attachment:fixed;
+        }
+        .tree{
+            background-color: #17104bd7;
+            width: 100%;
+            max-width: auto;
+            position: relative;
+            margin: auto;
+            box-shadow: 0 1.25em 2.18em rgba(51, 33, 33, 0.637);
+            padding: 20px 30px;
+            border-radius: 6px;
+            color: rgb(255, 255, 255);
+        }
+        details details{
+            margin-left: 20px;
+            padding: 5px 0;
+            color: rgb(255, 255, 255);
+        }
+
+        .rowChange span{
+                width: 100% !important;
+                float: left !important;
+                overflow: hidden !important;
+                text-overflow: ellipsis !important;
+                white-space: normal !important;
+        }
+        p{
+            font-weight: 500;
+            background-color: #030411;   
+            text-align: center;
+            color: #ffffff;      
+            border-radius: 0.3em;
+            display: flex;
+            justify-content: space-between;
+        }
+        .shell {
+            position:relative; 
+            width: 100%;
+            height: 100vh;
+        }
+
+        .content {
+            width: 100%;
+            height: 100%;
+            position: relative
+        }
+
+        .content h2 {
+            position: absolute;
+            text-align: center;
+            left: 50%;
+            transform: translate(-50%);
+            z-index: 999;
+            margin-top: 300px;
+            color: rgba(255, 255, 255, 0.9);
+            -webkit-text-stroke: #000 2px;
+            font: 600 100px '优设标题黑';
+        }
+
+        .images {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            overflow: hidden;
+        }
+
+        .images div {
+            width: 100%;
+            height: 100%;
+            background-size: cover;
+            position: absolute;
+        }
+
+        .img1 {
+            background-image: url('./img/1.png');
+        }
+
+        .img2 {
+            background-image: url('./img/2.png');
+        }
+
+        .img3 {
+            background-image: url('./img/3.png');
+        }
+
+        .img4 {
+            background-image: url('./img/4.png');
+        }
+
+        .img5 {
+            background-image: url('./img/5.png');
+        }
+
+        .img6 {
+            background-image: url('./img/6.png');
+            transform: translate(600px,400px);
+        }
+        .container {
+        background-color: #0602249d;
+        width: 100%;
+        max-width: auto;
+        position: relative;
+        margin: auto;
+        padding: 1px 1.25em;
+        border-radius: 0.43em;
+        box-shadow: 0 1.25em 2.18em rgba(255, 255, 255, 0.3);
+        }
+        a{
+        color: rgb(255, 253, 253);
+        text-decoration:none;
+        display : inline-block;
+        }
+        /* 导航条链接 */
+        .topnav a {
+        float: left;
+        display: block;
+        color: #f2f2f2;
+        text-align: center;
+        text-decoration: none;
+        }
+        
+        /* 链接颜色修改 */
+        .topnav a:hover {
+        border-radius: 0.7em;
+        background-color: rgba(27, 13, 145, 0.562);
+        color: rgb(255, 255, 255);
+        }
+        /* 导航条按钮 */
+        .topnav button {
+        float: left;
+        display: block;
+        color: #411010;
+        text-align: center;
+        text-decoration: none;
+        }
+        
+        /* 按钮颜色修改 */
+        .topnav button:hover {
+        border-radius: 0.1em;
+        background-color: rgba(11, 66, 70, 0.562);
+        color: rgb(255, 255, 255);
+        }
+
+        label {
+        display: block;
+        position: relative;
+        font-size: 1.12em;
+        font-weight: 500;
+        text-align: center;
+        width: 18em;
+        padding: 0.12em 0;
+        margin: auto;
+        border-radius: 0.31em;
+        cursor: pointer;
+        }
+        #num-of-files {
+        font-weight: 400;
+        text-align: center;
+        color: rgb(255, 255, 255);
+        margin: 0.5em 0 0.5em 0;
+        }
+        /* 创建两列 */
+        /* Left column */
+        .leftcolumn {   
+        float: left;
+        width: 25%;
+        position: fixed;
+        padding-top: 100px;
+        padding-left: 100px;
+        
+        }
+        
+        /* 右侧栏 */
+        .rightcolumn {
+        float: right;
+        width: 70%;
+        padding-top: 100px;
+        padding-right: 100px;
+        padding-left: 0px;
+        }
+        /* 列后面清除浮动 */
+        .row:after {
+        
+        content: "";
+        display: table;
+        clear: both;
+        }
+        /* 响应式布局 - 屏幕尺寸小于 800px 时，两列布局改为上下布局 */
+        @media screen and (max-width: 800px) {
+        .leftcolumn {
+            position: relative;
+            width: 100%;
+            padding: 0;
+        }
+        .rightcolumn {   
+            width: 100%;
+            padding: 0;
+        }
+        }
+        
+        /* 响应式布局 -屏幕尺寸小于 400px 时，导航等布局改为上下布局 */
+        @media screen and (max-width: 400px) {
+        .topnav a {
+            float: none;
+            width: 100%;
+        }
+        }
+
+    </style>
+</head>
+
+<body>
+    <!--背景-->
+    <div class="shell" style="position: fixed;">
+        <div class="content">
+            <div class="images">
+                <div class="img1"></div>
+                <div class="img2"></div>
+                <div class="img3"></div>
+                <div class="img4"></div>
+                <div class="img5"></div>
+                <div class="img6"></div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let img1 = document.querySelector('.img1')
+        let img3 = document.querySelector('.img3')
+        let img4 = document.querySelector('.img4')
+        let img5 = document.querySelector('.img5')
+        // 设置鼠标移动时触发的效果
+        document.addEventListener('mousemove',e=>{
+            // 获取鼠标的位置
+            let mouseX = e.clientX
+            let mouseY = e.clientY
+            // 获取图片距离左侧和顶部的距离
+            let img1x = img1.offsetLeft
+            let img1y = img1.offsetTop
+
+            let img3x = img3.offsetLeft
+            let img3y = img3.offsetTop
+
+            let img4x = img4.offsetLeft
+            let img4y = img4.offsetTop
+
+            let img5x = img5.offsetLeft
+            let img5y = img5.offsetTop
+            // 设置移动时的偏移量
+            let diff1x = (mouseX-img1x)/45
+            let diff1y = (mouseY-img1y)/45
+
+            let diff3x = (mouseX-img3x)/18
+            let diff3y = (mouseY-img3y)/18
+
+            let diff4x = (mouseX-img4x)/30
+            let diff4y = (mouseY-img4y)/30
+
+            let diff5x = (mouseX-img5x)/8
+            let diff5y = (mouseY-img5y)/8
+
+            img1.style.transform = `translate(${diff1x}px,${diff1y}px)`
+            img3.style.transform = `translate(${diff3x}px,${diff3y}px)`
+            img4.style.transform = `translate(${diff4x}px,${diff4y}px)`
+            img5.style.transform = `translate(${diff5x}px,${diff5y}px)`
+        })
+    </script>
+    <!--页面控件-->
+    <div class="row">
+        <div class="leftcolumn">
+            <div style="
+            background-color: rgb(15, 5, 41,0.7);
+            text-align: center;
+            padding-top: 20px;
+            border-radius: 0.43em;
+            position: relative;
+            ">
+                <img src="img/tou.png" alt="hjh" width="80px" height="80px">
+                <p style="color:#fefeff9d;
+                        padding: 20px;
+                ">
+                欢迎来到honi的文件仓库，在这里你可以尽情挑选所需文件。<br><br>QWQ
+                </p>
+            </div>
+        </div>
+    
+        <div class="rightcolumn">
+
+            <p style="position:relative; padding: 10px; color: rgb(13, 48, 88);" class='topnav'>
+
+                <input type="text" name="" id="input-com" value="" />
+                <button id="an" style="padding: 3px;">搜索文件</button>
+            </p>
+            <ul id="conter" class='topnav'></ul>
+            <br>
+
+            <div class="container">
+                <div id="num-of-files">No Files</div>
+            </div>
+            <div class="tree">
+                <!--根控件-->
+                <details id="root" open>
+                </details>
+            </div>
+        </div>
+    </div>
+
+    <!--自动遍历生成目录-->
+    <script>
+
+        //方法二
+        var Ajax = function () {
+            $.getJSON("./save.json", function (Data) {
+            displayData(Data)//传入一个函数
+            window.onload(Data)//传入一个函数
+        });
+        }();
+        //此方法只能在内部访问数据
+
+        //根目录控件
+        let root = document.getElementById("root");
+        root.innerHTML = "<summary><span>download</span></summary>";
+
+        var displayData= function(Data){
+            let numOfFiles = document.getElementById("num-of-files");
+            numOfFiles.textContent = `所有文件都在这里，共${Data.length}个文件分享`;
+            for (i of Data) {
+          
+                //基本量
+                let fileName = i.name;
+                let filepath = i.path;
+                let PathList = filepath.split('/');
+                let PPath = '';
+                let Path = filepath.substring(0, filepath.lastIndexOf('/'));    //对应文件的送入details的id
+                let fileSize = (i.size / 1024).toFixed(1);
+                
+                let idx = 0;
+                while(idx<PathList.length-1){
+
+                    //文件处于根目录
+                    if(PathList.length==2){                  
+                        let rfile = document.createElement("p");
+                        rfile.setAttribute("class",'topnav');
+                        rfile.setAttribute("id",fileName);
+                        rfile.innerHTML = `<p style='padding-left:10px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>${fileName}</p><p style='padding-left:10px;'>${fileSize}KB<a href=${filepath} download=${filepath} style='padding-left:10px; padding-right:10px;'>下载</a></p>`;
+                        if (fileSize >= 1024) {
+                        fileSize = (fileSize / 1024).toFixed(1);
+                        rfile.innerHTML = `<p style='padding-left:10px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>${fileName}</p><p style='padding-left:10px;'>${fileSize}MB<a href=${filepath} download=${filepath} style='padding-left:10px; padding-right:10px;'>下载</a></p>`;
+                        }
+                        root.appendChild(rfile);                            
+                        
+                    }
+                    //文件位于多级目录
+                    if(PathList.length>2&&idx!=0){
+                        PPath = PPath + '/' + PathList[idx];  //这个作为文件夹id
+                        //console.log(PPath);
+                        //console.log(PathList[idx+1]);
+                        //console.log(idx);
+                        
+                        //如果文件夹不存在
+                        if(document.getElementById(PPath)==null){
+                            //console.log('文件夹不存在');
+                            //位于根目录下的文件夹
+                            if(idx==1){
+                                let rdir = document.createElement("details");
+                                rdir.setAttribute("id",PPath);
+                                rdir.innerHTML = `<summary><span class="rowChange">${PathList[idx]}</span></summary>`;
+                                root.appendChild(rdir); 
+                            }
+                            //位于多级文件夹
+                            if(idx>1){
+                                let sdir = document.createElement("details");
+                                let fdir = document.getElementById(PPath.substring(0, PPath.lastIndexOf('/')))
+                                sdir.setAttribute("id",PPath);
+                                sdir.innerHTML = `<summary><span class="rowChange">${PathList[idx]}</span></summary>`;
+                                fdir.appendChild(sdir); 
+
+                            }
+                            
+                            let rfile = document.createElement("p");
+                            //rfile.setAttribute("id",fileName);
+                            rfile.setAttribute("id",fileName);
+                            rfile.setAttribute("class",'topnav');
+                            rfile.innerHTML = `<p style='padding-left:10px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>${fileName}</p><p style='padding-left:10px;'>${fileSize}KB<a href=${filepath} download=${filepath} style='padding-left:10px; padding-right:10px;'>下载</a></p>`;
+                            if (fileSize >= 1024) {
+                            fileSize = (fileSize / 1024).toFixed(1);
+                            rfile.innerHTML = `<p style='padding-left:10px;overflow: hidden;text-overflow:ellipsis;white-space: nowrap;'>${fileName}</p><p style='padding-left:10px;'>${fileSize}MB<a href=${filepath} download=${filepath} style='padding-left:10px; padding-right:10px;'>下载</a></p>`;
+                            }
+                            let dir = document.getElementById(PPath);
+                            dir.appendChild(rfile); 
+
+                        }
+                    }                             
+                    idx++;
+                }
+                
+            }
+
+        }
+
+        window.onload = function(Data){
+                var searchList = [];
+                var paths = [];
+                let fileName = i.name;
+                let filepath = i.path;
+                let fileSize = (i.size / 1024).toFixed(1);
+                for (i of Data) {
+                    searchList.push(i.name);
+                    paths.push(i.path);
+                }
+                //定义原始数据
+                //var searchList = Data;
+                //获取ul
+                var oul = document.getElementById("conter");
+                oul.setAttribute("style",'position: relative;');
+                //搜索按钮的点击事件
+                document.getElementById("an").onclick = function(){
+                    //获取input框的value值
+                    let chlicknum = [];
+                    var inputcom = document.getElementById("input-com").value;
+                    //定义新数组，保存符合搜索内容要求的数据
+                    var a = [];
+                    var k = 0;
+                    //循环判断符合要求的数据
+                    for(var j = 0;j < searchList.length;j ++){
+                        //数据中不包含搜索内容值的返回-1
+                        if(searchList[j].indexOf(inputcom) != -1){
+                            a[k++] = searchList[j];
+                            chlicknum.push(j);
+                            //console.log(j);
+                        }
+                    }
+                    //清空ul里面的内容
+                    document.getElementById("conter").innerHTML = "";
+                    //循环将数据输出到ul下
+                    for(var p = 0;p < a.length;p ++){
+                        //创建li
+                        let oli = document.createElement('p');
+                        //定义li里的内容
+                        oli.innerHTML = `<a href=${paths[chlicknum[p]]} download=${paths[chlicknum[p]]} style='padding-left:10px; padding-right:10px;'>${a[p]}</a>`;//paths[chlicknum[p]]//a[p];
+                        //`<a href=paths[chlicknum[p]] download=paths[chlicknum[p]] style='padding-left:10px; padding-right:10px;'>a[p]</a>`
+                        console.log(paths[chlicknum[p]]);
+                        console.log(chlicknum[p]);
+                        
+                        //将li添加到ul里
+                        oul.appendChild(oli);
+                    }
+                    if(a==''){
+                        let oli = document.createElement('p');
+                        oli.setAttribute('style','text-align: center;');
+                        oli.innerHTML = `很抱歉，无此文件。`;
+                        oul.appendChild(oli);
+                    }
+                }
+            }
+    </script>
+</body>
+
+</html>
